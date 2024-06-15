@@ -1,1 +1,0 @@
-savedcmd_/home/pedro/projects/linux_kernel_module/kernel_module/Module.symvers :=  scripts/mod/modpost -M  -a    -N  -o /home/pedro/projects/linux_kernel_module/kernel_module/Module.symvers -n -T /home/pedro/projects/linux_kernel_module/kernel_module/modules.order -i Module.symvers -e 

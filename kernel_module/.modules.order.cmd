@@ -1,1 +1,0 @@
-savedcmd_/home/pedro/projects/linux_kernel_module/kernel_module/modules.order := {   echo /home/pedro/projects/linux_kernel_module/kernel_module/my_module.o; :; } > /home/pedro/projects/linux_kernel_module/kernel_module/modules.order
