@@ -47,7 +47,7 @@ A pointer variable holds a memory address defining a location in memory where da
 - `static foo()` limits the scope of the function to the file it is defined in
 - `static foo_t foo` extends the lifetime of `foo` to the duration of the program
 
-## uintptr_t
+## `uintptr_t`
 - a variable of this type may hold a pointer to `void` or a `uint`
 - we use it to hold memory addresses, since these are simply **base 16 numeric values**, having a corresponding `uint` representation
 
