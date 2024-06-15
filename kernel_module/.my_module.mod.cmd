@@ -1,0 +1,1 @@
+savedcmd_/home/pedro/projects/linux_kernel_module/kernel_module/my_module.mod := printf '%s\n'   my_module.o | awk '!x[$$0]++ { print("/home/pedro/projects/linux_kernel_module/kernel_module/"$$0) }' > /home/pedro/projects/linux_kernel_module/kernel_module/my_module.mod

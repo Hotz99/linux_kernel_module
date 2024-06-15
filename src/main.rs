@@ -1,5 +1,4 @@
 mod communication;
-mod dummy_process;
 
 use std::fs;
 use std::io::{BufRead, BufReader};
@@ -11,7 +10,7 @@ use std::path::PathBuf;
 const TARGET_PROCESS_NAME: &str = "firefox";
 
 fn main() {
-    let dev_file_path: &str = "/dev/my_kernel_module";
+    let dev_file_path: &str = "/dev/my_module";
 
     let file = fs::OpenOptions::new()
         .read(true)
@@ -30,7 +29,7 @@ fn main() {
         }
     };
 
-    println!("found pid: {}", target_pid);
+    println!("target pid: {}", target_pid);
 
     unsafe {
         if let Err(e) = communication::set_target_process(file_descriptor, &target_pid) {
@@ -46,7 +45,7 @@ fn main() {
             }
         };
 
-        println!("found base address: {:x}", target_base_address);
+        println!("target base address: 0x{:x}", target_base_address);
     }
 }
 
@@ -87,7 +86,6 @@ fn get_base_address(pid: &u16) -> anyhow::Result<usize> {
     for line in reader.lines() {
         let line = line?;
         let parts: Vec<&str> = split_maps_line(line.as_str());
-        let perms = parts[1];
 
         if parts.len() < 6 {
             continue;

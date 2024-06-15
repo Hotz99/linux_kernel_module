@@ -4,7 +4,6 @@
     3. run `src/main.rs`
 
 # Interfacing C kernel module with Rust app
-    
 
 ## IOCTL Communication Workflow
     User Mode (UM) app:
@@ -18,12 +17,12 @@
         - implements an unlocked_ioctl function (or compat_ioctl for compatibility commands) that is called when an ioctl request is made from user space
         - reads the IOCTL command directly and processes it accordingly
 ## Making Unix system calls
-        Leveraged the crate `nix` to make syscalls
+        Leveraged the `nix` crate to make the ioctl syscalls.
 
 # C concepts
 
 ## Pointers
-    - a pointer variable holds a memory address. This address points to a location in memory where data is stored.
+    A pointer variable holds a memory address defining a location in memory where data is stored.
 
     1. CPU encounters a pointer variable
     2. reads the memory address stored in the pointer
@@ -31,23 +30,23 @@
     4. reads/writes the value
 
 ## `static` functions and variables
-    - `static foo()` limits the scope of the function to the file it is defined in
-    - `static foo_t foo` extends the lifetime of `foo` to the duration of the program
+    `static foo()` limits the scope of the function to the file it is defined in
+    `static foo_t foo` extends the lifetime of `foo` to the duration of the program
 
 ## uintptr_t
-    - a variable of this type may hold a pointer to `void` or a `uint`
-    - we use it to hold memory addresses, since these are simply **base 16 numeric values**, having a corresponding `uint` representation
+    A variable of this type may hold a pointer to `void` or a `uint`.
+    We use it to hold memory addresses, since these are simply **base 16 numeric values**, having a corresponding `uint` representation.
 
 # Memory concepts
 
 # Virtual vs. Physical Addresses
-    virtual:
+    Virtual:
         - used by applications to access memory, located within the virtual address space provided by the operating system for each process
         - used in pointer arithmetic, memory allocation and accessing variables and data structures within a program
 
-    physical:
+    Physical:
         - actual addresses on the physical RAM chips
         - only the operating system and hardware deal directly with physical addresses
 
 # Base and limit addresses
-    Define the start and end of a memory region allocated to a given process
+    Define the start and end of a memory region allocated to a given process.
