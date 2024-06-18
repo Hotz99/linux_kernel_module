@@ -21,8 +21,8 @@ For proper syntax highlighting, include the necessary headers in `.vscode/c_cpp_
 
 ## IOCTL communication workflow
 #### User Mode (UM) app
-- opens the device file in /dev to get a file descriptor (fd)
-- uses the ioctl system call on the fd to send specific commands to the kernel module
+- opens the device file in `/dev` to get a file descriptor (`fd`)
+- uses the `ioctl` system call on the `fd` to send specific commands to the kernel module
 
 #### Device file
 - is the communication endpoint through which IOCTL commands are sent and received
@@ -30,7 +30,7 @@ For proper syntax highlighting, include the necessary headers in `.vscode/c_cpp_
 - interfaces with both UM app and driver
 
 #### Kernel Mode (KM) module (or driver)
-- implements an unlocked_ioctl function (or compat_ioctl for compatibility commands) that is called when an ioctl request is made from user space
+- implements the `unlocked_ioctl` function (or `compat_ioctl` for compatibility commands) that is called when an IOCTL request is made from userland
 - reads the IOCTL command directly and processes it accordingly
 
 # NOTES: C concepts
@@ -63,4 +63,4 @@ A pointer variable holds a memory address defining a location in memory where da
 - only the operating system and hardware deal directly with physical addresses
 
 ## Base and limit addresses
-Define the start and end of a memory region allocated to a given process.
+Define the start and end, respectively, of a memory region allocated to a given process.
