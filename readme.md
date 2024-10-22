@@ -18,12 +18,12 @@ Linux kernel module written in C, allows for reading and writing memory of a giv
 2. interface between the user space and kernel space
 3. buffers data between the user space and kernel space i.e. read and written data to and from the kernel module
 
-### User Mode (UM) program
+### User Space program
 1. gets a file descriptor (fd) of the device file in `/dev/`
 2. uses the ioctl system call on the fd to send commands to the kernel module
 
-### Kernel Module (KM):
-1. implements an unlocked_ioctl function (or compat_ioctl for compatibility commands) that is called when an ioctl request is made from user space
+### Kernel Module:
+1. implements `unlocked_ioctl` function that is called when an IOCTL request is made from user space
 2. reads the IOCTL command directly and processes it accordingly
 
 ## Kernel Module Features
