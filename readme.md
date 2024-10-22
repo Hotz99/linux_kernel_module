@@ -7,10 +7,10 @@ Linux kernel module written in C, allows for reading and writing memory of a giv
 
 # Getting started
 
-1. Run `install.sh` once.
+1. Run `kernel_module/install.sh` once.
     - The module's `register_chrdev()` dynamically generates a major number for the device file. The major number is printed to the kernel log when the module is loaded.
     - Read the used number from the kernel log and adjust `MAJOR_NUMBER` in `install.sh` to match.
-2. Run `install.sh` again with the correct major number.
+2. Run `kernel_module/install.sh` again with the correct major number.
 3. Run `src/main.rs`
 
 
