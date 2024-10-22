@@ -2,11 +2,9 @@
 I wanted to learn about Linux kernel level programs and how they interact with usermode programs.
 
 # What ?
-
 Linux kernel module written in C, allows for reading and writing memory of a given target process, interfacing with a user-space program via IOCTL commands through a character device file.
 
 # Getting started
-
 1. Run `kernel_module/install.sh` once.
     - The module's `register_chrdev()` dynamically generates a major number for the device file. The major number is printed to the kernel log when the module is loaded.
     - Read the used number from the kernel log and adjust `MAJOR_NUMBER` in `install.sh` to match.
@@ -16,17 +14,17 @@ Linux kernel module written in C, allows for reading and writing memory of a giv
 
 ## IOCTL Communication Workflow
 ### Device File
-    1. communication endpoint where IOCTL commands are sent and received (not buffered)
-    2. interface between the user space and kernel space
-    3. buffers data between the user space and kernel space i.e. read and written data to and from the kernel module
+1. communication endpoint where IOCTL commands are sent and received (not buffered)
+2. interface between the user space and kernel space
+3. buffers data between the user space and kernel space i.e. read and written data to and from the kernel module
 
 ### User Mode (UM) program
-    1. gets a file descriptor (fd) of the device file in `/dev/`
-    2. uses the ioctl system call on the fd to send commands to the kernel module
+1. gets a file descriptor (fd) of the device file in `/dev/`
+2. uses the ioctl system call on the fd to send commands to the kernel module
 
 ### Kernel Module (KM):
-    1. implements an unlocked_ioctl function (or compat_ioctl for compatibility commands) that is called when an ioctl request is made from user space
-    2. reads the IOCTL command directly and processes it accordingly
+1. implements an unlocked_ioctl function (or compat_ioctl for compatibility commands) that is called when an ioctl request is made from user space
+2. reads the IOCTL command directly and processes it accordingly
 
 ## Kernel Module Features
 
