@@ -3,19 +3,16 @@ I wanted to learn about Linux kernel level programs and how they interact with u
 
 # What ?
 
-- Linux kernel module written in C, featuring process virtual memory reading and writing, ordered through IOCTL commands. 
-
-- Usermode program written in Rust:
-    - finds the PID of the target process
-    - finds the base address of the target process
-    - makes `ioctl` syscalls to the kernel module device interface, leveraging the `nix` crate
+Linux kernel module written in C, allows for reading and writing memory of a given target process, interfacing with a user-space program via IOCTL commands through a character device file.
 
 # Getting started
-1. read the comments in `kernel_module/install.sh`
-2. run `kernel_module/install.sh`
-3. run `src/main.rs`
 
-# STUDY NOTES
+1. Run `install.sh` once.
+    1.1. The module's `register_chrdev()` dynamically generates a major number for the device file. The major number is printed to the kernel log when the module is loaded.
+    1.2. Read the used number from the kernel log and adjust `MAJOR_NUMBER` in `install.sh` to match.
+2. Run `install.sh` again with the correct major number.
+3. Run `src/main.rs`
+
 
 ## IOCTL Communication Workflow
     Device File:
@@ -31,8 +28,35 @@ I wanted to learn about Linux kernel level programs and how they interact with u
         1. implements an unlocked_ioctl function (or compat_ioctl for compatibility commands) that is called when an ioctl request is made from user space
         2. reads the IOCTL command directly and processes it accordingly
 
-## Making Unix system calls
-    Leverages the crate `nix` to make syscalls (ioctl in this case)
+## Kernel Module Features
+
+- **Target Process Selection**: Allows for setting a target process using a PID, and internally tracks the target using a `task_struct`. 
+- **Reading Process Memory**: Uses `access_process_vm` to read memory from the target process, validating the memory address and the target task.
+- **Writing Process Memory**: Writes to a specified memory address in the target process using `access_process_vm`, ensuring the process' memory mapping (`mm_struct`) is valid.
+- **IOCTL Command Handling**: Supports custom IOCTL commands to set the target process, read process memory, and write process memory.
+
+### Device File Operations
+
+- **open**: Handles opening the device file.
+- **release**: Handles releasing the device file.
+- **read** and **write**: Basic implementations for reading from and writing to the device file.
+- **unlocked_ioctl**: Handles IOCTL commands, including setting the target process, reading memory, and writing memory.
+
+### IOCTL Commands
+
+- **IOCTL_SET_TARGET_PROCESS**: Sets the target process using a PID passed from user space.
+- **IOCTL_RPM**: Reads a value from the target process's memory and copies it to user space.
+- **IOCTL_WPM**: Writes a value to the target process's memory from user space.
+
+### Initialization and Cleanup
+
+- **Module Initialization**: Registers a character device and initializes the target process handler.
+- **Module Cleanup**: Releases any held `task_struct` and unregisters the character device.
+
+
+# C Study Notes
+
+Some notes I wrote while learning relevant C concepts for this project.
 
 ## Pointers
     1. A pointer variable holds a memory address. This address points to a location in memory where data is stored
