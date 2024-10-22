@@ -13,8 +13,9 @@ nix::ioctl_write_ptr!(write_process_memory, IOCTL_MAGIC, 3, WPMArgs);
 #[repr(C)]
 pub struct RPMArgs {
     pub address: usize,
-    // no reason for this to be signed, but driver's access_process_vm() expects signed int
-    pub size: i32,
+    pub size: u32,
+    // raw pointer to buffer in user space
+    // buffer will hold read data from target process
     pub buffer: *mut usize,
 }
 
